@@ -1,0 +1,18 @@
+########################################################
+###########            Config           ################
+########################################################
+
+INO_APP_ID  = ""
+INO_APP_KEY = ""
+INO_API_END = "https://www.inoreader.com/reader/api/0/"
+INO_USR     = ""
+INO_PSW     = ""
+
+DOWNLOAD_BASE_FOLDER = "/home/maziar/Downloads/"
+DOWNLOAD_LABEL = 'user/-/state/com.google/starred'
+ARCHIVE_LABEL  = 'user/-/label/Get'
+
+DLGD_HOST = '127.0.0.1' 
+DLGD_PORT = 58846
+DLGD_USER = 'maziar'
+DLGD_PASS = "mypassword"
