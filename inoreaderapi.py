@@ -20,7 +20,7 @@ def signin():
     if r.status_code == 200:
         GAUTH = re.search('(?<=Auth=).*', r.content).group(0)
         payload = {'AppId': config.INO_APP_ID, 'AppKey': config.INO_APP_KEY, 'Authorization': 'GoogleLogin auth=' + GAUTH}
-        print "Signed in Successfully"
+        print "Inoreader signed in successfully"
         return payload
     else:
         print "Signin failed: " + r.text
@@ -63,7 +63,7 @@ def get_labels(item):
 
 def generate_save_path(item):
     labels = get_labels(item)
-    return config.DOWNLOAD_BASE_FOLDER + labels[0] + '/' + item['origin']['title'] + '/'
+    return config.DOWNLOAD_BASE_FOLDER + labels[0] + '/' + item['origin']['title']
 
 def change_items_labels(items, add='', rem=''):
     params = {'i': items}
@@ -79,4 +79,5 @@ def toggle_labels(items):
 ### Sign in upon module import
 ### You can comment this out and sign in manually
 signin()
+
 
