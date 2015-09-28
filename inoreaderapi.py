@@ -34,6 +34,14 @@ def do_post(term, data={}):
         print "Error: " + r.text
         raise
 
+def do_get(term, data={}):
+    r = requests.post(config.INO_API_END + term, headers=payload, data=data)
+    if r.status_code == 200:
+        return r
+    else:
+        print "Error: " + r.text
+        raise
+    
 def get_all_tags():
     r = do_post('tag/list')
     print r.content
@@ -65,14 +73,20 @@ def generate_save_path(item):
     labels = get_labels(item)
     return config.DOWNLOAD_BASE_FOLDER + labels[0] + '/' + item['origin']['title']
 
-def change_items_labels(items, add='', rem=''):
-    params = {'i': items}
+def change_items_labels(item_ids, add='', rem=''):
+    ### For Some reason the last item in the post always gets ignored. 
+    ### So we add a dummy END value to the list.
+    ### ToDo for later
+    if isinstance(item_ids, type([])): 
+        params = {'i': item_ids + ["END"]}
+    else:
+        params = {'i': item_ids}
     if add: params['a'] = add
     if rem: params['r'] = rem
     do_post('edit-tag', data = params)
     
-def toggle_labels(items):
-    change_items_labels(items, rem=config.DOWNLOAD_LABEL, add=config.ARCHIVE_LABEL)
+def toggle_labels(item_ids):
+    change_items_labels(item_ids, rem=config.DOWNLOAD_LABEL, add=config.ARCHIVE_LABEL)
 
 
 
