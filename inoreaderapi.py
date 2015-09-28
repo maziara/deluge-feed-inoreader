@@ -49,7 +49,6 @@ def get_all_tags():
 def get_starred_items():
     r = do_post('stream/contents/user/-/state/com.google/starred')
     result = r.json()
-    print "Retreived " + str(len(result['items'])) + " starred items"
     # for item in result['items']:
     #     print item['title']
     return result
@@ -57,7 +56,6 @@ def get_starred_items():
 def get_downloadable_items():
     r = do_post('stream/contents/' + config.DOWNLOAD_LABEL)
     result = r.json()
-    print "Retreived " + str(len(result['items'])) + " starred items"
     return result
     
 def get_enclosure_url(item):
