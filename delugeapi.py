@@ -1,4 +1,4 @@
-from . import config
+import config
 from deluge_client import DelugeRPCClient
 import werkzeug as wz
 

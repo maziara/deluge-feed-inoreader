@@ -1,4 +1,4 @@
-from . import config
+import config
 import requests
 import re
 

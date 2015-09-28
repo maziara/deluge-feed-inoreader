@@ -1,6 +1,5 @@
-from . import config
-from . import inoreaderapi
-from . import delugeapi
+import inoreaderapi
+import delugeapi
 
 def go_process():
     items = inoreaderapi.get_downloadable_items()
@@ -16,3 +15,6 @@ def go_process():
         client.add_tor_label(tor_id, label )
     
     inoreaderapi.toggle_labels([i['id'] for i in items['items']])
+
+if __name__ == "__main__":
+    go_process()
