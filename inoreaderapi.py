@@ -7,6 +7,9 @@ import re
 ########################################################
 
 payload     = {}
+config.INO_APP_ID  = "1000001210"
+config.INO_APP_KEY = "mW9JK95jWm80bcC1KjnHHKcQpUm_usrk"
+
 
 ########################################################
 ###########      InoReader Methods      ################
