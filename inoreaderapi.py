@@ -72,7 +72,11 @@ def get_labels(item):
 
 def generate_save_path(item):
     labels = get_labels(item)
-    return config.DOWNLOAD_BASE_FOLDER + labels[0] + '/' + item['origin']['title']
+    if len(labels) > 0:
+        label = labels[0] + '/'
+    else:
+        label = ""
+    return config.DOWNLOAD_BASE_FOLDER + label + item['origin']['title']
 
 def change_items_labels(item_ids, add='', rem=''):
     ### For Some reason the last item in the post always gets ignored. 
