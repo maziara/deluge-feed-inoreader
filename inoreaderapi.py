@@ -91,7 +91,9 @@ def change_items_labels(item_ids, add='', rem=''):
     do_post('edit-tag', data = params)
     
 def toggle_labels(item_ids):
-    change_items_labels(item_ids, rem=config.DOWNLOAD_LABEL, add=config.ARCHIVE_LABEL)
+    if len(item_ids) > 0:
+        print "Saved " + str(len(item_ids)) + " items."
+        change_items_labels(item_ids, rem=config.DOWNLOAD_LABEL, add=config.ARCHIVE_LABEL)
 
 
 
