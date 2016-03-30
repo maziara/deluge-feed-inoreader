@@ -1,8 +1,10 @@
 import inoreaderapi
 import delugeapi
+from datetime import datetime
 
 def go_process():
     items = inoreaderapi.get_downloadable_items()
+    print datetime.now().isoformat()
     if len(items['items']) == 0:
         print "No items to retreive. Exiting."
     else:
@@ -21,12 +23,13 @@ def go_process():
                     client.add_tor_label(tor_id, label )
                 item['saved'] = True
             except:
-                print 'Failed on processing: ' + item['title']
-                raise
-                #print 'Debug item content: '
+                print "Failed on processing: " + item['title'].encode('ascii', 'ignore')
+                #print "Debug item content: "
                 #print item
-            finally:
-                inoreaderapi.toggle_labels([i['id'] for i in items['items'] if i.has_key('saved')])
+                #raise
+                continue
+#            finally:
+        inoreaderapi.toggle_labels([i['id'] for i in items['items'] if i.has_key('saved')])
         
 
 if __name__ == "__main__":
