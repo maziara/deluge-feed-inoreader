@@ -24,13 +24,14 @@ def go_process():
                 item['saved'] = True
             except:
                 print "Failed on processing: " + item['title'].encode('ascii', 'ignore')
-                #print "Debug item content: "
-                #print item
-                #raise
+                guess_error_reason(item)
                 continue
 #            finally:
         inoreaderapi.toggle_labels([i['id'] for i in items['items'] if i.has_key('saved')])
         
+def guess_error_reason(item):
+    if inoreaderapi.get_enclosure_url(item) == '':
+        print "Item has empty enclosure URL."
 
 if __name__ == "__main__":
     go_process()
