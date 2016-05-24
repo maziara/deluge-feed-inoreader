@@ -60,6 +60,8 @@ def recover_unseeded_items():
 
 def process_items_for_seeds(items):
     for item in items['items']:
+        if(inoreaderapi.label_url_to_name(inoreaderapi.config.HAS_SEED_LABEL) in inoreaderapi.get_labels(item)):
+            continue
         try:
             seed_count = inoreaderapi.get_seeder_count(item)
             print(item['origin']['title'], item['title'], inoreaderapi.get_seeder_count(item))

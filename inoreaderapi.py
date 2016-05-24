@@ -118,8 +118,19 @@ def get_labels(item):
     #Get the list of labels on an item. 
     #So far we just use one label for each item.
     # Need to be expanded later
-    return [m.group(0) for m in [re.search('(?<=label/).*', i) for i in item['categories']] if m]
+    return [ label_url_to_name(c) for c in item['categories']]
+    
+def has_label(label, item):
+    if label in get_labels(item):
+        return True
+    else:
+        return False
 
+def label_url_to_name(label):
+    m = re.search('(?<=label/).*', label)
+    if m:
+        return m.group(0)
+    
 def generate_save_path(item):
     labels = get_labels(item)
     if len(labels) > 0:
