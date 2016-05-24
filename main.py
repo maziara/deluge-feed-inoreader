@@ -73,4 +73,5 @@ def process_items_for_seeds(items):
 
 if __name__ == "__main__":
     go_process()
-    process_seed_counts()
+    if inoreaderapi.config.DO_SEED_TAGGING:
+        process_seed_counts()
