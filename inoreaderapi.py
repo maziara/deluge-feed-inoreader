@@ -1,6 +1,8 @@
 import config
 import requests
 import re
+from bs4 import BeautifulSoup
+import urllib2
 
 ########################################################
 ###########            Globals          ################
@@ -61,8 +63,56 @@ def get_downloadable_items():
     result = r.json()
     return result
     
+def get_unread_items():
+    params = {'xt': 'user/-/state/com.google/read'} #Don't get the read ones
+    params['n'] = 1000                                #Get 100 articles
+    params['r'] = 'o'                               #Sort by olderst first
+    folder = 'user/-/label/P'                      #Only articles from this folder
+    r = do_post('stream/contents/' + folder, data = params)
+    result = r.json()
+    #print_items(result['items'])
+    return result
+    
+def get_unseeded_items():
+    params = {'n': 1000}                             #Get 100 articles
+    params['r'] = 'o'                               #Sort by olderst first
+    folder = config.NO_SEED_LABEL                   #Only unseeded articles
+    r = do_post('stream/contents/' + folder, data = params)
+    result = r.json()
+    #print_items(result['items'])
+    return result
+    
+def print_items(items):
+    for i in items:
+        try:
+            print(i['origin']['title'], i['title'], get_seeder_count(i))
+        except:
+            print("Failed seedcount for:" + i['title'])
+            continue
+    
 def get_enclosure_url(item):
     return item['enclosure'][0]['href']
+    
+def get_item_url(item):
+    return item['alternate'][0]['href']
+    
+def get_item_page(item):
+    user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'
+    headers = {'User-Agent': user_agent}
+    data = ""
+    url = get_item_url(item)
+    req = urllib2.Request(url, data, headers)
+    response = urllib2.urlopen(req)
+    soup = BeautifulSoup(response.read(), "lxml")
+    return soup
+    
+def get_seeder_count(item):
+    page = get_item_page(item)
+    seeds_tag = page.find('span', 'seed')
+    if (seeds_tag):
+        return int(seeds_tag.text)
+    else:
+        return 0
 
 def get_labels(item):
     #Get the list of labels on an item. 
@@ -95,7 +145,15 @@ def toggle_labels(item_ids):
         print "Saved " + str(len(item_ids)) + " items."
         change_items_labels(item_ids, rem=config.DOWNLOAD_LABEL, add=config.ARCHIVE_LABEL)
 
+def mark_seeded(item_ids):
+    change_items_labels(item_ids, rem=config.NO_SEED_LABEL ,add=config.HAS_SEED_LABEL)
+def mark_unseeded(item_ids):
+    change_items_labels(item_ids, add=config.NO_SEED_LABEL)
 
+def mark_as_read(item_ids):
+    change_items_labels(item_ids, add='user/-/state/com.google/read')
+def mark_as_unread(item_ids):
+    change_items_labels(item_ids, rem='user/-/state/com.google/read')
 
 ### Sign in upon module import
 ### You can comment this out and sign in manually

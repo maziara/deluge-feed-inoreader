@@ -32,6 +32,42 @@ def go_process():
 def guess_error_reason(item):
     if inoreaderapi.get_enclosure_url(item) == '':
         print "Item has empty enclosure URL."
+        
+def process_seed_counts():
+    items = inoreaderapi.get_unread_items()
+    if len(items['items']) == 0:
+        return
+    process_items_for_seeds(items)
+    seeded_items = [i['id'] for i in items['items'] if i.has_key('seed_count') and i['seed_count'] > 0]
+    unseeded_items = [i['id'] for i in items['items'] if i.has_key('seed_count') and i['seed_count'] == 0]
+    print(str(len(seeded_items)) + "Seeded items")
+    print(str(len(unseeded_items)) + "Unseeded items")
+    inoreaderapi.mark_seeded(seeded_items)
+    inoreaderapi.mark_unseeded(unseeded_items)
+    inoreaderapi.mark_as_read(unseeded_items)
+    
+def recover_unseeded_items():
+    items = inoreaderapi.get_unseeded_items()
+    if len(items['items']) == 0:
+        return
+    process_items_for_seeds(items)
+    seeded_items = [i['id'] for i in items['items'] if i.has_key('seed_count') and i['seed_count'] > 0]
+    unseeded_items = [i['id'] for i in items['items'] if i.has_key('seed_count') and i['seed_count'] == 0]
+    print(str(len(seeded_items)) + " items recovered!")
+    print(str(len(unseeded_items)) + " items still unseeded.")
+    inoreaderapi.mark_seeded(seeded_items)
+    inoreaderapi.mark_as_unread(seeded_items)
+
+def process_items_for_seeds(items):
+    for item in items['items']:
+        try:
+            seed_count = inoreaderapi.get_seeder_count(item)
+            print(item['origin']['title'], item['title'], inoreaderapi.get_seeder_count(item))
+            item['seed_count'] = seed_count
+        except:
+            print("Failed fetching seeds count for: " + item['title'])
+            continue
+    return items
 
 if __name__ == "__main__":
     go_process()
