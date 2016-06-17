@@ -1,6 +1,7 @@
 import config
 from deluge_client import DelugeRPCClient
 import werkzeug as wz
+import base64
 
 ########################################################
 ###########        Deluge Methods       ################
@@ -16,6 +17,13 @@ def connect_to_deluge():
     def add_torr_url(self, url):
         return self.call('core.add_torrent_url', wz.urls.url_fix(url), {})
     client.add_torr_url = MethodType(add_torr_url, client, DelugeRPCClient)
+
+    def add_torr_file(self, file):
+        f = open(file, 'rb')
+        filedump = base64.encodestring(f.read())
+        f.close()
+        return self.call('core.add_torrent_file', file, filedump, {})
+    client.add_torr_file = MethodType(add_torr_file, client, DelugeRPCClient)
     
     def add_label(self, label, options={}):
         label = normalize_label(label)

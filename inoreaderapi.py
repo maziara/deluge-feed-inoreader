@@ -91,7 +91,30 @@ def print_items(items):
             continue
     
 def get_enclosure_url(item):
-    return item['enclosure'][0]['href']
+    return str(item['enclosure'][0]['href'].encode('utf8'))
+    
+def download_enclosure(item):
+    user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'
+    headers = {'User-Agent': user_agent}
+    data = ""
+    url = get_enclosure_url(item)
+    req = urllib2.Request(url, data, headers)
+    
+    # Open the url
+    try:
+        response = urllib2.urlopen(req)
+        print "downloading " + url
+
+        # Open our local file for writing
+        with open('torrent_file.torrent', "wb") as local_file:
+            local_file.write(response.read())
+
+    #handle errors
+    except urllib2.HTTPError, e:
+        print "HTTP Error:", e.code, url
+    except urllib2.URLError, e:
+        print "URL Error:", e.reason, url
+    
     
 def get_item_url(item):
     return item['alternate'][0]['href']
