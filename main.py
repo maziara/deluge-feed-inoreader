@@ -20,11 +20,12 @@ def go_process():
                     filename = 'torrent_file.torrent'
                     inoreaderapi.download_enclosure(item)
                     tor_id = client.add_torr_file(filename)
+                    os.remove(filename)
                 except:
                     print "Failed on processing: " + item['title'].encode('ascii', 'ignore')
                     guess_error_reason(item)
+                    os.remove(filename)
                     continue
-                os.remove(filename)
             if tor_id: #URL added, otherwise it's probably already in deluge!
                 label = item['origin']['title']
 
