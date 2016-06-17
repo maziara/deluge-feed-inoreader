@@ -102,19 +102,21 @@ def download_enclosure(item):
     
     # Open the url
     try:
+        filename = 'torrent_file.torrent'
         response = urllib2.urlopen(req)
         print "downloading " + url
 
         # Open our local file for writing
-        with open('torrent_file.torrent', "wb") as local_file:
+        with open(filename, "wb") as local_file:
             local_file.write(response.read())
-
+        return filename
     #handle errors
     except urllib2.HTTPError, e:
         print "HTTP Error:", e.code, url
+        raise
     except urllib2.URLError, e:
         print "URL Error:", e.reason, url
-    
+        raise    
     
 def get_item_url(item):
     return item['alternate'][0]['href']

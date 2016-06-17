@@ -12,20 +12,27 @@ def go_process():
         print "Retreived " + str(len(items['items'])) + " starred items"
         client = delugeapi.connect_to_deluge()
         for item in items['items']:
+            print "Saving -> '" + item['title'] + "'"
             try:
-                print "Saving -> '" + item['title'] + "'"
                 tor_id = client.add_torr_url(inoreaderapi.get_enclosure_url(item))
             except:
+                ## Could not add torrent URL directly 
+                ## Let's try downloading the file instead.
                 try:
-                    filename = 'torrent_file.torrent'
-                    inoreaderapi.download_enclosure(item)
-                    tor_id = client.add_torr_file(filename)
-                    os.remove(filename)
+                    filename = inoreaderapi.download_enclosure(item)
                 except:
                     print "Failed on processing: " + item['title'].encode('ascii', 'ignore')
                     guess_error_reason(item)
-                    os.remove(filename)
                     continue
+                else:
+                    try:
+                        tor_id = client.add_torr_file(filename)
+                    except:
+                        print "Failed on processing: " + item['title'].encode('ascii', 'ignore')
+                        print "Probably already added."
+                    finally:
+                        os.remove(filename)
+
             if tor_id: #URL added, otherwise it's probably already in deluge!
                 label = item['origin']['title']
 
@@ -35,11 +42,11 @@ def go_process():
                 client.add_tor_label(tor_id, label )
             item['saved'] = True
             tor_id = ''
-#            finally:
+        
         inoreaderapi.toggle_labels([i['id'] for i in items['items'] if i.has_key('saved')])
         
 def guess_error_reason(item):
-    if inoreaderapi.get_enclosure_url(item) == '':
+    if not(item.has_key('enclosure')) or inoreaderapi.get_enclosure_url(item) == '':
         print "Item has empty enclosure URL."
         
 def process_seed_counts():
