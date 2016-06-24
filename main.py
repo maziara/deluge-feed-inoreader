@@ -12,7 +12,7 @@ def go_process():
         print "Retreived " + str(len(items['items'])) + " starred items"
         client = delugeapi.connect_to_deluge()
         for item in items['items']:
-            print "Saving -> '" + item['title'] + "'"
+            print "Saving -> '" + item['title'].encode('utf-8') + "'"
             try:
                 tor_id = client.add_torr_url(inoreaderapi.get_enclosure_url(item))
             except:
