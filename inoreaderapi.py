@@ -1,8 +1,8 @@
 import config
 import requests
 import re
-from bs4 import BeautifulSoup
 import urllib2
+from bs4 import BeautifulSoup
 
 ########################################################
 ###########            Globals          ################
@@ -11,6 +11,7 @@ import urllib2
 payload     = {}
 config.INO_APP_ID  = "1000001210"
 config.INO_APP_KEY = "mW9JK95jWm80bcC1KjnHHKcQpUm_usrk"
+config.INO_API_END = "https://www.inoreader.com/reader/api/0/"
 
 
 ########################################################

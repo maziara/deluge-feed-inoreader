@@ -2,17 +2,19 @@
 ###########            Config           ################
 ########################################################
 
-INO_APP_ID  = ""
-INO_APP_KEY = ""
-INO_API_END = "https://www.inoreader.com/reader/api/0/"
-INO_USR     = ""
-INO_PSW     = ""
+INO_USR     = ""    # Your InnoReader Username
+INO_PSW     = ""    # Your InnoReader Password
 
-DOWNLOAD_BASE_FOLDER = "/home/maziar/Downloads/"
+DOWNLOAD_BASE_FOLDER = "/home/user/Downloads/"
 DOWNLOAD_LABEL = 'user/-/state/com.google/starred'
 ARCHIVE_LABEL  = 'user/-/label/Get'
 
+DO_SEED_TAGGING = True #weather to tag the items based on their seed count
+HAS_SEED_LABEL = 'user/-/label/Seeded'
+NO_SEED_LABEL = 'user/-/label/NoSeed'
+RECOVERED_SEED_LABEL = 'user/-/label/RecoveredSeed'
+
 DLGD_HOST = '127.0.0.1' 
 DLGD_PORT = 58846
-DLGD_USER = 'maziar'
-DLGD_PASS = "mypassword"
+DLGD_USER = 'delugeUser'
+DLGD_PASS = "delugePassword"
