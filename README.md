@@ -4,7 +4,7 @@ RSS feed your Deluge server with Inoreader service
 ## About
 This is a python script to feed your favorite torrents via RSS to your Deluge server.
 
-All you need to do is tag the article you want to download on inoreader, schedule this python script to run on desent periods, and DFI will send them to Deluge for you.
+All you need to do is tag the article you want to download on inoreader, schedule this python script to run on decent periods, and DFI will send them to Deluge for you.
 
 Right now it only support torrents from RSS services on [extratorrent.cc](http://extratorrent.cc) and [kat.cr](http://kat.cr).
 
