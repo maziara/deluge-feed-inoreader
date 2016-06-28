@@ -1,5 +1,5 @@
 # deluge-feed-inoreader (DFI)
-RSS feed your Deluge server with Innoreader service
+RSS feed your Deluge server with Inoreader service
 
 ## About
 This is a python script to feed your favorite torrents via RSS to your Deluge server.
@@ -23,11 +23,11 @@ Right now it only support torrents from RSS services on [extratorrent.cc](http:/
 ```shell
 git clone git@github.com:maziara/deluge-feed-inoreader.git
 ```
-2. Copy config.py.sample to config.py
+2. Make a copy of config.py.sample to config.py
 ```shell
 cp config.py.sample config.py
 ```
-3. Edit and make the necessary changes according to comments
+3. Edit and make the necessary changes according to the comments
 4. Run the script
 ```shell
 python main.py
