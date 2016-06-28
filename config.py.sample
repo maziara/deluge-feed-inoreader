@@ -5,12 +5,18 @@
 INO_USR     = ""    # Your InnoReader Username
 INO_PSW     = ""    # Your InnoReader Password
 
+# Set the base folder for your downloads
 DOWNLOAD_BASE_FOLDER = "/home/user/Downloads/"
+# By default we download the starred items.
 DOWNLOAD_LABEL = 'user/-/state/com.google/starred'
+# By default we add the label 'Get' to any downloaded item
 ARCHIVE_LABEL  = 'user/-/label/Get'
 
-DO_SEED_TAGGING = True #weather to tag the items based on their seed count
+# Set this to True weather to tag the items based on their seed count > 0
+DO_SEED_TAGGING = True 
+# Tag for items with seed
 HAS_SEED_LABEL = 'user/-/label/Seeded'
+# Tag for items without seed
 NO_SEED_LABEL = 'user/-/label/NoSeed'
 RECOVERED_SEED_LABEL = 'user/-/label/RecoveredSeed'
 
