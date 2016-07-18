@@ -160,7 +160,7 @@ def label_url_to_name(label):
 def generate_save_path(item):
     labels = get_labels(item)
     if len(labels) > 0:
-        label = labels[0] + '/'
+        label = labels[3] + '/'
     else:
         label = ""
     return config.DOWNLOAD_BASE_FOLDER + label + item['origin']['title']
