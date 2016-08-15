@@ -44,6 +44,7 @@ def go_process():
             tor_id = ''
         
         inoreaderapi.toggle_labels([i['id'] for i in items['items'] if i.has_key('saved')])
+    client.remove_finished()
         
 def guess_error_reason(item):
     if not(item.has_key('enclosure')) or inoreaderapi.get_enclosure_url(item) == '':
