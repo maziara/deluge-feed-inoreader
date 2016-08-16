@@ -6,11 +6,11 @@ import os
 def go_process():
     items = inoreaderapi.get_downloadable_items()
     print datetime.now().isoformat()
+    client = delugeapi.connect_to_deluge()
     if len(items['items']) == 0:
         print "No items to retreive. Exiting."
     else:
         print "Retreived " + str(len(items['items'])) + " starred items"
-        client = delugeapi.connect_to_deluge()
         for item in items['items']:
             print "Saving -> '" + item['title'].encode('utf-8') + "'"
             try:
