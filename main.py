@@ -78,6 +78,7 @@ def recover_unseeded_items():
     inoreaderapi.mark_as_unread(seeded_items)
 
 def process_items_for_seeds(items):
+    print datetime.now().isoformat()
     for index, item in enumerate(items['items']):
         if(inoreaderapi.label_url_to_name(inoreaderapi.config.HAS_SEED_LABEL) in inoreaderapi.get_labels(item)):
             continue
@@ -88,6 +89,7 @@ def process_items_for_seeds(items):
         except:
             print("Failed fetching seeds count for: " + item['title'])
             continue
+    print datetime.now().isoformat()
     return items
 
 if __name__ == "__main__":
