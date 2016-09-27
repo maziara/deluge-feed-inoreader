@@ -54,6 +54,7 @@ def process_seed_counts():
     items = inoreaderapi.get_unread_items()
     if len(items['items']) == 0:
         return
+    print("Processing " + str(len(items['items'])) + " items for seeds." )
     process_items_for_seeds(items)
     seeded_items = [i['id'] for i in items['items'] if i.has_key('seed_count') and i['seed_count'] > 0]
     unseeded_items = [i['id'] for i in items['items'] if i.has_key('seed_count') and i['seed_count'] == 0]
@@ -67,6 +68,7 @@ def recover_unseeded_items():
     items = inoreaderapi.get_unseeded_items()
     if len(items['items']) == 0:
         return
+    print("Rechecking " + str(len(items['items'])) + " unseeded items for seeds." )
     process_items_for_seeds(items)
     seeded_items = [i['id'] for i in items['items'] if i.has_key('seed_count') and i['seed_count'] > 0]
     unseeded_items = [i['id'] for i in items['items'] if i.has_key('seed_count') and i['seed_count'] == 0]
@@ -76,12 +78,12 @@ def recover_unseeded_items():
     inoreaderapi.mark_as_unread(seeded_items)
 
 def process_items_for_seeds(items):
-    for item in items['items']:
+    for index, item in enumerate(items['items']):
         if(inoreaderapi.label_url_to_name(inoreaderapi.config.HAS_SEED_LABEL) in inoreaderapi.get_labels(item)):
             continue
         try:
             seed_count = inoreaderapi.get_seeder_count(item)
-            print(item['origin']['title'], item['title'], inoreaderapi.get_seeder_count(item))
+            print(index, item['origin']['title'], item['title'], inoreaderapi.get_seeder_count(item))
             item['seed_count'] = seed_count
         except:
             print("Failed fetching seeds count for: " + item['title'])
