@@ -3,6 +3,8 @@ import requests
 import re
 import urllib2
 from bs4 import BeautifulSoup
+from datetime import datetime
+
 
 ########################################################
 ###########            Globals          ################
@@ -145,6 +147,17 @@ def get_labels(item):
     #So far we just use one label for each item.
     # Need to be expanded later
     return [ label_url_to_name(c) for c in item['categories']]
+    
+def published_time(item):
+    return datetime.fromtimestamp(int(item["published"]))
+
+def updated_time(item):
+    return datetime.fromtimestamp(int(item["updated"]))
+    
+def is_newer(item, thedate):
+    itempdate = published_time(item)
+    itemudate = updated_time(item)
+    return (itempdate >= thedate or itemudate >= thedate)
     
 def has_label(label, item):
     if label in get_labels(item):
