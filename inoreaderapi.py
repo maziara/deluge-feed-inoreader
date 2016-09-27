@@ -50,6 +50,13 @@ def do_get(term, data={}):
         print "Error: " + r.text
         raise
     
+def get_subscriptions_list():
+    r = do_get("subscription/list")
+    subscriptions = r.json()
+    for index, s in enumerate(subscriptions["subscriptions"]):
+        print(index, s['title'], datetime.fromtimestamp(s['firstitemmsec']/1000000).strftime("%F"))
+    return subscriptions
+
 def get_all_tags():
     r = do_post('tag/list')
     print r.content
@@ -78,7 +85,7 @@ def get_unread_items():
     
 def get_unseeded_items():
     params = {'n': 1000}                             #Get 100 articles
-    params['r'] = 'o'                               #Sort by olderst first
+    #params['r'] = 'o'                               #Sort by olderst first
     folder = config.NO_SEED_LABEL                   #Only unseeded articles
     r = do_post('stream/contents/' + folder, data = params)
     result = r.json()
