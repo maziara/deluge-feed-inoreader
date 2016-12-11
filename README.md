@@ -14,7 +14,7 @@ Right now it only support torrents from RSS services on [extratorrent.cc](http:/
 
  ```shell
  sudo apt-get install python-lxml
- pip install sb4 DelugeRPCClient werkzeug requests
+ sudo pip install deluge_client werkzeug requests
  ```
 - [Deluge](http://deluge-torrent.org/) server with web plugin
 - [Inoreader account](http://www.inoreader.com)
