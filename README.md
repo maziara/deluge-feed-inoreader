@@ -8,7 +8,7 @@ All you need to do is tag the article you want to download on inoreader, schedul
 
 Right now it only support torrents from RSS services on [extratorrent.cc](http://extratorrent.cc) and [kat.cr](http://kat.cr).
 
-##Requirements
+## Requirements
 - Python 2.7
 - Following dependencies:
 
@@ -20,13 +20,13 @@ Right now it only support torrents from RSS services on [extratorrent.cc](http:/
 - [Inoreader account](http://www.inoreader.com)
 - Any scheduling service like cron (or not!)
 
-##Features
+## Features
 - Supports folder structure based on your folders in Innoreader.
 - Optionally can mark seeded torrents and hide unseeded ones. (only via extratorrent for now)
 - Supports rechecking the unseeded torrents to un-hide them again when they come back alive.
 - Removing the finished torrents with customizable exceptions based on tracker.
 
-##Setup
+## Setup
 1. Clone the repo
 
  ```shell
@@ -46,5 +46,5 @@ Right now it only support torrents from RSS services on [extratorrent.cc](http:/
  If everything goes right, this will fetch your starred items and add them to deluge. Providing you a summary.
 5. Now schedule the script to run every hour (or your preferred intervals).
 
-##Contribute
+## Contribute
 Fork, commit your awesome change, submit a pull request.
